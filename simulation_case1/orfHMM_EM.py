@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-# import modules
 from math import inf
 from math import log
 import numpy as np
@@ -14,15 +7,10 @@ from scipy.optimize import minimize
 import random
 
 
-# In[ ]:
-
-
-
-
 
 # # log func
 
-# In[ ]:
+
 
 
 def log_func(number):
@@ -37,15 +25,11 @@ def log_func(number):
         return -inf
 
 
-# In[ ]:
-
-
 
 
 
 # # log-sum-exp
 
-# In[ ]:
 
 
 def logSumExp(x):
@@ -64,24 +48,12 @@ def logSumExp(x):
         return result   
 
 
-# In[ ]:
-
-
-# examples
-# x = list(range(-100,-50))
-# log(sum(np.exp(x)))
-# logSumExp(x)
-
-
-# In[ ]:
-
-
 
 
 
 # # log likelihood f(x)
 
-# In[ ]:
+
 
 
 def lnNB(x, alpha, beta, E):
@@ -98,18 +70,7 @@ def lnNB(x, alpha, beta, E):
     return result
 
 
-# In[ ]:
 
-
-# examples
-#x = 50
-#alpha = 1
-#beta = 0.1
-#E = 10
-#lnNB(x, alpha, beta, E)
-
-
-# In[ ]:
 
 
 
@@ -117,7 +78,6 @@ def lnNB(x, alpha, beta, E):
 
 # # Forward
 
-# In[ ]:
 
 
 def start_codon_false(i, prob_current, prob_next, observed_data, alpha_list, beta_list, E, model1):
@@ -155,7 +115,7 @@ def start_codon_false(i, prob_current, prob_next, observed_data, alpha_list, bet
     return prob_next
 
 
-# In[ ]:
+
 
 
 def start_codon_true(i, prob_current, prob_next, trans, next_codon, observed_data, alpha_list, beta_list, E, model1):
@@ -212,7 +172,7 @@ def start_codon_true(i, prob_current, prob_next, trans, next_codon, observed_dat
     return prob_next
 
 
-# In[ ]:
+
 
 
 def stop_codon_false(i, prob_current, prob_next, observed_data, alpha_list, beta_list, E, model1):
@@ -251,7 +211,7 @@ def stop_codon_false(i, prob_current, prob_next, observed_data, alpha_list, beta
     return prob_next
 
 
-# In[ ]:
+
 
 
 def stop_codon_true(i, prob_current, prob_next, observed_data, alpha_list, beta_list, E, model1):
@@ -269,13 +229,13 @@ def stop_codon_true(i, prob_current, prob_next, observed_data, alpha_list, beta_
     '''
     if model1 == True:
         # state 4 to state 5
-        #prob_next[4] = prob_current[3] + log(1) + lnNB(observed_data[i+1], alpha_list[4], beta_list[4], E)
+        prob_next[4] = prob_current[3] + log(1) + lnNB(observed_data[i+1], alpha_list[4], beta_list[4], E)
 
-         # state 7 to state 8
+        # state 7 to state 8
         prob_next[7] = prob_current[6] + log(1) + lnNB(observed_data[i+1], alpha_list[7], beta_list[7], E)
 
         # state 14 to 15
-       # prob_next[14] = prob_current[13] + log(1) + lnNB(observed_data[i+1], alpha_list[14], beta_list[14], E)
+        prob_next[14] = prob_current[13] + log(1) + lnNB(observed_data[i+1], alpha_list[14], beta_list[14], E)
 
         # state 17 to state 18
         prob_next[17] = prob_current[16] + log(1) + lnNB(observed_data[i+1], alpha_list[17], beta_list[17], E)
@@ -290,7 +250,7 @@ def stop_codon_true(i, prob_current, prob_next, observed_data, alpha_list, beta_
     return prob_next
 
 
-# In[ ]:
+
 
 
 def forward_algorithm(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, num_sequence, model1):
@@ -363,7 +323,6 @@ def forward_algorithm(RNA_data, observed_data, alpha_list, beta_list, E, trans, 
         # transter to next state with probability 1
         if model1 == True:
             sure_to_transit = [1, 2, 4, 5, 7, 8, 11, 12, 14, 15, 17, 18]
-            #sure_to_transit = [1, 2, 3, 4, 5, 7, 8, 11, 12,13, 14, 15, 17, 18]
         elif model1 == False:
             sure_to_transit = [1, 2, 4, 5, 7, 8]
         for k in sure_to_transit:
@@ -383,7 +342,7 @@ def forward_algorithm(RNA_data, observed_data, alpha_list, beta_list, E, trans, 
     return output
 
 
-# In[ ]:
+
 
 
 def forward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1):
@@ -405,15 +364,9 @@ def forward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, sto
     return output
 
 
-# In[ ]:
-
-
-# forward = forward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list)
-
 
 # # Backward
 
-# In[ ]:
 
 
 def start_codon_false_back(i, prob_current_back, prob_previous_back, observed_data, alpha_list, beta_list, E, model1):
@@ -442,7 +395,6 @@ def start_codon_false_back(i, prob_current_back, prob_previous_back, observed_da
     return prob_previous_back
 
 
-# In[ ]:
 
 
 def start_codon_true_back(i, prob_current_back, prob_previous_back, trans, next_codon, observed_data, alpha_list, beta_list, E, model1):
@@ -502,7 +454,7 @@ def start_codon_true_back(i, prob_current_back, prob_previous_back, trans, next_
     return prob_previous_back
 
 
-# In[ ]:
+
 
 
 def stop_codon_false_back(i, prob_current_back, prob_previous_back, observed_data, alpha_list, beta_list, E, model1):
@@ -529,7 +481,7 @@ def stop_codon_false_back(i, prob_current_back, prob_previous_back, observed_dat
     return prob_previous_back
 
 
-# In[ ]:
+
 
 
 def stop_codon_true_back(i, prob_current_back, prob_previous_back, observed_data, alpha_list, beta_list, E, model1):
@@ -556,7 +508,6 @@ def stop_codon_true_back(i, prob_current_back, prob_previous_back, observed_data
     return prob_previous_back
 
 
-# In[ ]:
 
 
 def backward_algorithm(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, num_sequence, model1):
@@ -675,68 +626,14 @@ def backward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, st
     return output
 
 
-# In[ ]:
-
-
-#backward =  backward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list)
-
-
-# In[ ]:
-
-
-
-
-
-# # Incomplete log likelihood (simple) with backward (test accuracy)
-
-# In[ ]:
-
-
-#def incomplete_log_likelihood(backward, observed_data, alpha_list, beta_list, E):
-    '''
-    Notes p3
-    Compute the incomplete log likelihood with backward algorithm
-    backward: a list of matrix. Stores backward algorithm output
-    observed_data: a list of lists. Each inner list indicates the height of a sequence and this list contains scalars
-    alpha_list: a list of alpha values for 21 or 10 states (NB parameter)
-    beta_list: a list of beta values for 21 or 10 states (NB parameter)
-    E: a list of scalars. Normalization factor for all sequences
-    output: scalar. Indicates incomplete log likelihood
-    '''
-   
-    # initialize parameters
-    #temp_list = []
-    
-    # incomplete log likelihood
-    #for n in range(1, len(observed_data)+1):
-        
-     #   B1_1 = backward[n-1][0][0]
-     #   nb = lnNB(observed_data[n-1][0], alpha_list[0], beta_list[0], E[n-1])
-     #   temp_list.append(B1_1 + nb)
-       
-   # output = logSumExp(temp_list)
-        
-   # return output
-
-
-# In[ ]:
-
-
-#incomplete_log_likelihood(backward, observed_data, alpha_list, beta_list, E)
-
-
-# In[ ]:
-
 
 
 
 
 # # Incomplete log likelihood (simple) with forward (actual use)
 
-# In[ ]:
 
-
-def incomplete_log_likelihood(forward, observed_data, alpha_list, beta_list, E):
+def incomplete_log_likelihood(forward, observed_data, E):
     '''
     Notes p3
     Compute the incomplete log likelihood with forward algorithm
@@ -759,13 +656,51 @@ def incomplete_log_likelihood(forward, observed_data, alpha_list, beta_list, E):
     return np.sum(output_list)
 
 
-# In[ ]:
 
+# complete log likelihood
+def complete_log_likelihood(infer_seq, observed_seq, RNA_seq, alpha_list, beta_list, trans, E):
+    
+    temp = []
+    for t in range(len(observed_seq)):
+        for s in range(21):
+            log_emit = lnNB(observed_seq[t], alpha_list[s], beta_list[s], E)
+            temp.append(log_emit)
 
-#incomplete_log_likelihood(forward, observed_data, alpha_list, beta_list, E)
+        if t + 3 < len(observed_seq):
+            next_codon = RNA_seq[t] + RNA_seq[t+1] + RNA_seq[t+2]
+                  
+            if next_codon in trans.keys():
+                if infer_seq[t] == 1 and infer_seq[t-1] == 1:
+                    log_trans = log_func(1 - trans[next_codon][0] - trans[next_codon][1])
+                if infer_seq[t] == 2 and infer_seq[t-1] == 1:
+                    log_trans = log_func(trans[next_codon][0])
+                if infer_seq[t] == 12 and infer_seq[t-1] == 1:
+                    log_trans = log_func(trans[next_codon][1])
+                if infer_seq[t] == 11 and infer_seq[t-1] == 11:
+                    log_trans = log_func(1 - trans[next_codon][2])
+                if infer_seq[t] == 12 and infer_seq[t-1] == 11:
+                    log_trans = log_func(trans[next_codon][2])
+                temp.append(log_trans)
+                   
+    output = logSumExp(temp)
+    
+    return output
 
+# copmute posterior for inferred sequence
+def compute_posterior(infer_seq, observed_data, RNA_data, alpha_list, beta_list, trans, forward, E):
+    
+    posterior = []
 
-# In[ ]:
+    for n in range(len( observed_data)):
+    
+        last_position = len(forward[n]) - 1
+        incomplete_loglik = logSumExp(forward[n][last_position])
+    
+        complete_loglik = complete_log_likelihood(infer_seq[n], observed_data[n], RNA_data[n], alpha_list, beta_list, trans, E[n])
+        
+        posterior.append(np.exp(complete_loglik - incomplete_loglik))
+
+    return posterior
 
 
 
@@ -773,7 +708,7 @@ def incomplete_log_likelihood(forward, observed_data, alpha_list, beta_list, E):
 
 # # Compute L(simple)
 
-# In[ ]:
+
 
 
 def compute_L(forward, backward, model1):
@@ -805,15 +740,12 @@ def compute_L(forward, backward, model1):
     return output
 
 
-# In[ ]:
 
-
-#L = compute_L(forward, backward)
 
 
 # # Compute H
 
-# In[ ]:
+
 
 
 def transprob_comp(curr_state, next_state, codon_specific, trans, model1):
@@ -849,7 +781,7 @@ def transprob_comp(curr_state, next_state, codon_specific, trans, model1):
    
 
 
-# In[ ]:
+
 
 
 def compute_H_nume(forward, backward, curr_state, next_state, codon_specific, observed_data, alpha_list, beta_list, num_sequence, t, trans, E, model1):
@@ -872,57 +804,10 @@ def compute_H_nume(forward, backward, curr_state, next_state, codon_specific, ob
     output: scalar
     '''
     transprob = transprob_comp(curr_state, next_state, codon_specific, trans, model1)
-    numerator = forward[num_sequence - 1][t - 1][curr_state - 1] +                transprob + lnNB(observed_data[num_sequence - 1][t], alpha_list[next_state - 1], beta_list[next_state - 1], E[num_sequence - 1]) +                 backward[num_sequence - 1][t][next_state - 1]
+    numerator = forward[num_sequence - 1][t - 1][curr_state - 1] +  transprob + lnNB(observed_data[num_sequence - 1][t], alpha_list[next_state - 1], beta_list[next_state - 1], E[num_sequence - 1]) +                 backward[num_sequence - 1][t][next_state - 1]
     return numerator
 
 
-# In[ ]:
-
-
-def compute_H_deno(forward, backward, curr_state, codon_specific, observed_data, alpha_list, beta_list, num_sequence, t, trans, E, model1):
-    '''
-    Notes p4
-    Compute denominator for H function according to current state
-    forward: a list of matrix
-    backward: a list of matrix
-    curr_state: int. Indicates the current state (1-21)
-    next_state: int. Indicates the next state (1-21)
-    codon_specific: string. Indicates the specific codon
-    observed_data: a list. Indicates the height of a sequence and this list contains scalars
-    alpha_list: a list of alpha values for 21 or 10 states (NB parameter)
-    beta_list: a list of beta values for 21 or 10 states (NB parameter)
-    num_sequence: int. Indicates which RNA sequence
-    t: int. Indicates the position inside RNA sequence
-    trans: dictionary
-    E: list. Normalization factor
-    model1: boolean (True/False). Identify it's model1 (21-states: True) or model2 (10-states: False)
-    output: scalar
-    '''
-    output_list = [] 
-        
-    # case state1 to state1, 2, 12
-    if curr_state == 1:
-        if model1 == True:
-            temp = [1, 2, 12]
-        elif model1 == False:
-            temp = [1, 2]
-        for next_state in temp:
-            output_list.append(compute_H_nume(forward, backward, curr_state, next_state, codon_specific, 
-                                              observed_data, alpha_list, beta_list, num_sequence, t, trans, 
-                                              E, model1))
-    
-    # case state11 to state11, 12
-    elif curr_state == 11:
-        for next_state in [11, 12]:
-            output_list.append(compute_H_nume(forward, backward, curr_state, next_state, codon_specific, 
-                                              observed_data, alpha_list, beta_list, num_sequence, t, trans, 
-                                              E, model1))
-
-    return logSumExp(output_list)
-        
-
-
-# In[ ]:
 
 
 def compute_H_codon(forward, backward, curr_state, next_state, codon_specific, RNA_data, observed_data, alpha_list, beta_list, E, trans, t, num_sequence, model1):
@@ -948,6 +833,11 @@ def compute_H_codon(forward, backward, curr_state, next_state, codon_specific, R
     # initialize parameters
     output = -inf
     numerator_list = []
+    
+
+    last_position = len(forward[num_sequence-1]) - 1
+    incomplete_loglik = logSumExp(forward[num_sequence-1][last_position]) # denominator
+        
     # check codon
     if t + 3 <= len(RNA_data[num_sequence - 1]):
         next_codon = RNA_data[num_sequence - 1][t] + RNA_data[num_sequence - 1][t+1] + RNA_data[num_sequence - 1][t+2]  
@@ -956,22 +846,15 @@ def compute_H_codon(forward, backward, curr_state, next_state, codon_specific, R
    
             numerator = compute_H_nume(forward, backward, curr_state, next_state, codon_specific, observed_data, 
                                        alpha_list, beta_list, num_sequence, t, trans, E, model1)
-            if numerator == -inf:
-                return -inf
             
-    
-            denominator = compute_H_deno(forward, backward, curr_state, codon_specific, observed_data, 
-                                         alpha_list, beta_list, num_sequence, t, trans, E, model1)
-        
-            output = numerator - denominator
+            output = numerator - incomplete_loglik
             
             
     return output
+    
 
 
 # # store probabilities
-
-# In[ ]:
 
 
 
@@ -1036,10 +919,9 @@ def store_info(forward, backward, RNA_data, observed_data, alpha_list, beta_list
 
 # # three parameters
 
-# In[ ]:
 
 
-def update_three_parameters(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1):
+def update_three_parameters(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, L, model1):
     '''
     Update transition probability 
     forward: a list of matrix
@@ -1060,54 +942,46 @@ def update_three_parameters(forward, backward, RNA_data, observed_data, alpha_li
         info = store_info(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, 
                           stop_codon_list, ci, model1)
         
+        demo_L1 = []
+        demo_L2 = []
+        for n in range(len(observed_data)):
+           for t in range(len(observed_data[n])):
+               if t + 3 < len(observed_data[n]):
+                   codon = RNA_data[n][t] + RNA_data[n][t+1] + RNA_data[n][t+2]
+                   if codon == ci:
+                      demo_L1.append(L[n][t-1][0])
+                      demo_L2.append(L[n][t-1][10])
+             
+        demo_L1_sum = np.exp(logSumExp(demo_L1))
+        demo_L2_sum = np.exp(logSumExp(demo_L2))
+               
         # it it's 21-states model
         if model1 == True:
-            deno_alpha = info[0]+info[1]+info[2]
-            deno_delta = info[3] + info[4]
-            output[ci] = [info[1]/deno_alpha, info[2]/deno_alpha, info[4]/deno_delta]
-            
-        # if it's 10-states model
-        else:
-            deno_alpha = info[0]+info[1]
-            output[ci] = info[1]/deno_alpha
+            output[ci] = [info[1]/demo_L1_sum, info[2]/demo_L1_sum, info[4]/demo_L2_sum]
         
     return output
                 
     
 
 
-# In[ ]:
 
 
-#update_three_parameters(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list)
-
-
-# # alpha - M
-
-# In[ ]:
-
-
-# Note p9 
-#Q function with respect to alpha
-def object_function_alpha(x, state, forward, observed_data, beta_list, E, L): # list of alpha_m
-    
+# emission probs update
+def object_function_emisson(x, state, forward, observed_data, E, L):
     output = 0
     
     for n in range(1, len(forward)+1):
         for t in range(1, len(forward[n-1])+1):
-            temp = lnNB(observed_data[n-1][t-1], x, beta_list[state-1], E[n-1])
-            output += np.exp(L[n-1][t-1][state-1]) * temp      
+            temp = lnNB(observed_data[n-1][t-1], x[0], x[1], E[n-1])
+            output += np.exp(L[n-1][t-1][state-1]) * temp
+            
         
-    return((-1)*output)
+    return((-1)*output) 
 
 
-# In[ ]:
-
-
-# derivative function with respect to alpha
-def derivative_function_alpha(x, state, forward, observed_data, beta_list, E, L): # list of alpha_m
-        
-    output_sum = 0
+# derivative of the objective function
+def derivative_emission(x, state, forward, observed_data, E, L):
+    output_alpha = 0
     for n in range(1, len(observed_data)+1):           
               
         for t in range(1, len(observed_data[n-1])+1):
@@ -1115,80 +989,32 @@ def derivative_function_alpha(x, state, forward, observed_data, beta_list, E, L)
             sum_s = 0
             for s in range(1, observed_data[n-1][t-1]+1):
                     
-                sum_s += 1/(x + observed_data[n-1][t-1] - s)
+                sum_s += 1/(x[0] + observed_data[n-1][t-1] - s)
                                  
-            latter = sum_s + log(beta_list[state-1] / (E[n-1] + beta_list[state-1]))
-
-            output_sum += np.exp(L[n-1][t-1][state-1]) * latter
-               
-    
-    return (-1)*output_sum
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# # beta - M
-
-# In[ ]:
-
-
-# Note p10
-# Q function with respect to beta
-def object_function_beta(x, state, forward, observed_data, alpha_list, E, L): # list of beta_m
-    
-    output = 0
-    
-    for n in range(1, len(forward)+1):
-        for t in range(1, len(forward[n-1])+1):
-            temp = lnNB(observed_data[n-1][t-1], alpha_list[state-1], x, E[n-1])
-            output += np.exp(L[n-1][t-1][state-1]) * temp
+            latter = sum_s + np.log(1- E[n-1]/(E[n-1] + x[1]))
+                
+            output_alpha += np.exp(L[n-1][t-1][state-1]) * latter
             
-        
-    return ((-1)*output)    
+    derivative_alpha = (-1) * output_alpha
 
-
-# In[ ]:
-
-
-# derivative function with respect to beta
-def derivative_function_beta(x, state, forward, observed_data, alpha_list, E, L): # list of beta_m
-        
-    output_sum = 0
+    output_beta = 0
     for n in range(1, len(observed_data)+1):
                  
         for t in range(1, len(observed_data[n-1])+1):
                 
-            first_term = alpha_list[state-1]/x
-            second_term = (alpha_list[state-1]+observed_data[n-1][t-1])/(E[n-1]+x)
+            first_term = x[0]/x[1]
+            second_term = (x[0]+observed_data[n-1][t-1])/(E[n-1]+x[1])
                
-            output_sum += np.exp(L[n-1][t-1][state-1]) * (first_term - second_term)      
-           
-    return (-1)* output_sum
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+            output_beta += np.exp(L[n-1][t-1][state-1]) * (first_term - second_term)
+            
+    derivative_beta = (-1) * output_beta
+    
+    df = np.array([derivative_alpha, derivative_beta])
+    return df
 
 
 
 
-
-# In[ ]:
 
 
 
@@ -1196,7 +1022,7 @@ def derivative_function_beta(x, state, forward, observed_data, alpha_list, E, L)
 
 # # EM iteration
 
-# In[ ]:
+
 
 
 def EM_iter(RNA_data, observed_data, E, trans_init, alpha_init, beta_init, epsilon, max_iter, fixed, stop_codon_list, model1):
@@ -1226,27 +1052,20 @@ def EM_iter(RNA_data, observed_data, E, trans_init, alpha_init, beta_init, epsil
     
     # compute initial forward and backward
     forward = forward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)
-    backward = backward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)  
+    backward = backward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)
     
     log_links = []
-    log_links.append(incomplete_log_likelihood(forward, observed_data, alpha_init, beta_init, E))
+    log_links.append(incomplete_log_likelihood(forward, observed_data, E))
     ##print(log_links) ##remove
     
     delta = 1
     n_iter = 1
     while((np.abs(delta) > epsilon) and (n_iter < max_iter)):
-        ##print("iteration" + str(n_iter)) ##remove
-        
-        curr_trans = trans.copy()
-        curr_alpha_list = alpha_list.copy()
-        if fixed == False:
-            curr_beta_list = beta_list.copy()
        
         L = compute_L(forward, backward, model1)
         
         # update rho_u_ci, rho_ci, delta_ci
-        trans = update_three_parameters(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)
-        ##print(trans) ##remove
+        trans = update_three_parameters(forward, backward, RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, L, model1)
         
         # order of updating 
         if model1 == True:
@@ -1258,50 +1077,26 @@ def EM_iter(RNA_data, observed_data, E, trans_init, alpha_init, beta_init, epsil
         # update alpha_list and beta_list
         for i in state_list:
             state = i
-           
-            ##print("state"+str(state)) ##remove
-            res = minimize(object_function_alpha, alpha_list[state-1], method='BFGS', tol = 1, jac=derivative_function_alpha, args = (state, forward, observed_data, beta_list, E, L), options={'disp': False, 'maxiter': 10,'gtol': 1})
-            alpha_list[state-1] = res.x[0]
-            ##print("alpha"+str(res.x[0])) ##remove
-        #    print(res.success)        
-           
-        for i in state_list:
-            state = i             
-            if fixed == False:
-                res = minimize(object_function_beta, beta_list[state-1], method='nelder-mead', tol = 1, args = (state, forward, observed_data, alpha_list, E, L), options={'disp': False})
-                #res = minimize(object_function_beta, beta_list[state-1], method='BFGS', tol = 1, jac=derivative_function_beta, args = (state, forward, observed_data, curr_alpha_list, E, L), options={'disp': False, 'maxiter': 10,'gtol': 1})
-                beta_list[state-1] = res.x[0]
-        #        print(res.success)
-                ##print("beta"+str(res.x[0])) ##remove
-        
-        ##print(alpha_list) ##remove
-        ##print(beta_list) ##remove
+            pt = [alpha_list[state-1],beta_list[state-1]]
+            res = minimize(object_function_emisson, pt, method='L-BFGS-B', jac=derivative_emission, args = (state, forward, observed_data, E, L), options={'disp': False,'maxiter': 10, 'gtol': 1})
+            alpha_list[state-1] = res['x'][0]
+            beta_list[state-1] = res['x'][1]
 
         # update forwad and backward
         forward = forward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)
         backward = backward_matrix(RNA_data, observed_data, alpha_list, beta_list, E, trans, stop_codon_list, model1)  
         
         # log likelihood
-        log_links.append(incomplete_log_likelihood(forward, observed_data, alpha_list, beta_list, E))
+        log_links.append(incomplete_log_likelihood(forward, observed_data, E))
         delta = log_links[-1] - log_links[-2]
         n_iter += 1
         
-        ##print(log_links) ##remove
-
-    debug = forward    
+   
     if fixed == False:
-        return (trans, alpha_list, beta_list, log_links, debug)
+        return (trans, alpha_list, beta_list, log_links, forward)
     else:
-        return (trans, alpha_list, log_links)
+        return (trans, alpha_list, log_links, forward)
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 

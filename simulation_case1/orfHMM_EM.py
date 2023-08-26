@@ -1078,7 +1078,7 @@ def EM_iter(RNA_data, observed_data, E, trans_init, alpha_init, beta_init, epsil
         for i in state_list:
             state = i
             pt = [alpha_list[state-1],beta_list[state-1]]
-            res = minimize(object_function_emisson, pt, method='L-BFGS-B', jac=derivative_emission, args = (state, forward, observed_data, E, L), options={'disp': False,'maxiter': 10, 'gtol': 1})
+            res = minimize(object_function_emisson, pt, method='L-BFGS-B',bounds = [(0,inf),(0,inf)] ,jac=derivative_emission, args = (state, forward, observed_data, E, L), options={'disp': False,'maxiter': 10, 'gtol': 1})
             alpha_list[state-1] = res['x'][0]
             beta_list[state-1] = res['x'][1]
 

@@ -17,7 +17,7 @@ start_codon_list = [('AUG')]
 transition_list = [[0.3, 0.6, 0.4], [0.3, 0.5, 0.2], [0.2, 0.4, 0.1]] # rho_u, rho, and delta
 
 mean_list_true = np.array([10, 50, 45, 35, 25, 20, 15, 50, 40, 30, 10, 100, 90, 80, 60, 50, 30, 100, 95, 85, 10])
-variance_list_true =  mean_list_true * 1.05
+variance_list_true =  mean_list_true * 1.3
 beta_list_true = 1/(variance_list_true/mean_list_true-1)
 alpha_list_true = mean_list_true * beta_list_true
 
